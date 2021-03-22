@@ -8,8 +8,8 @@
 #include <imageSkyDetector.h>
 #include <file_system_processor.h>
 
-#define BATCH_PROCESS
-//#define SINGLE_PROCESS
+//#define BATCH_PROCESS
+#define SINGLE_PROCESS
 
 
 int main(int argc, char **argv) {
@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     google::SetLogDestination(google::GLOG_INFO, "./log/image_quality_check_");
     google::SetStderrLogging(google::GLOG_INFO);
 
-    // 创建log文件夹
+    // Logfile
     if (!file_processor::FileSystemProcessor::is_directory_exist("./log")) {
         file_processor::FileSystemProcessor::create_directories("./log");
     }
@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 
     if (argc != 3) {
         LOG(INFO) << "Usage:";
-        LOG(INFO) << "./detector 图像输入路径 图像输出路径";
+        LOG(INFO) << "./detector inputimage.jpg outputimage.jpg";
         return -1;
     } else {
 

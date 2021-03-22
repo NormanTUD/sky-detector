@@ -38,13 +38,13 @@ SkyAreaDetector& SkyAreaDetector::operator=(const SkyAreaDetector &_SkyAreaDetec
 }
 
 /***
- * 读取图像文件
+ * 读取image file
  * @param image_file_path
  * @return
  */
 bool SkyAreaDetector::load_image(const std::string &image_file_path) {
     if (!file_processor::FileSystemProcessor::is_file_exist(image_file_path)) {
-        LOG(ERROR) << "图像文件: " << image_file_path << "不存在" << std::endl;
+        LOG(ERROR) << "image file: " << image_file_path << " does not exist" << std::endl;
         return false;
     }
 
@@ -53,7 +53,7 @@ bool SkyAreaDetector::load_image(const std::string &image_file_path) {
 //    cv::resize(_src_img, _src_img, cv::Size(_src_img.size[1] * 4, _src_img.size[0] * 4));
 
     if (_src_img.empty() || !_src_img.data) {
-        LOG(ERROR) << "图像文件: " << image_file_path << "读取失败" << std::endl;
+        LOG(ERROR) << "image file: " << image_file_path << " failed to read " << std::endl;
         return false;
     }
 
@@ -146,8 +146,8 @@ void SkyAreaDetector::batch_detect(const std::string &image_dir, const std::stri
             file_processor::FileSystemProcessor::
             SEARCH_OPTION_T::ALLDIRECTORIES);
 
-    LOG(INFO) << "开始批量提取天空区域";
-    LOG(INFO) << "--- 图像: --- 耗时(s): ---";
+    LOG(INFO) << "Starting sky extraction";
+    LOG(INFO) << "--- Image: --- Time (s): ---";
 
     for (auto &image_file : image_file_list) {
 
@@ -190,7 +190,7 @@ void SkyAreaDetector::batch_detect(const std::string &image_dir, const std::stri
         }
     }
 
-    LOG(INFO) << "批量提取完毕";
+    LOG(INFO) << "Extraction done";
 }
 
 /***
