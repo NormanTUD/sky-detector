@@ -72,11 +72,12 @@ bool SkyAreaDetector::extract_sky(const cv::Mat &src_image, cv::Mat &sky_mask) {
     int image_height = src_image.size[0];
     int image_width = src_image.size[1];
 
+    LOG(INFO) << "Defining vectors" << std::endl;
     std::vector<int> sky_border_optimal = extract_border_optimal(src_image);
 
     if (!has_sky_region(sky_border_optimal, image_height / 30, image_height / 4, 2)) {
 #ifdef DEBUG
-        LOG(INFO) << "没有提取到天空区域" << std::endl;
+        LOG(INFO) << "No sky area will be extracted" << std::endl;
 #endif
         return false;
     }
@@ -89,6 +90,7 @@ bool SkyAreaDetector::extract_sky(const cv::Mat &src_image, cv::Mat &sky_mask) {
     cv::waitKey();
 #endif
 
+    LOG(INFO) << "Checking for partial sky" << std::endl;
     if (has_partial_sky_region(sky_border_optimal, image_width / 3)) {
         std::vector<int> border_new = refine_border(sky_border_optimal, src_image);
         sky_mask = make_sky_mask(src_image, border_new);
@@ -100,6 +102,7 @@ bool SkyAreaDetector::extract_sky(const cv::Mat &src_image, cv::Mat &sky_mask) {
         return true;
     }
 
+    LOG(INFO) << "Internal create_sky_mask" << std::endl;
     sky_mask = make_sky_mask(src_image, sky_border_optimal);
 
     return true;
@@ -118,10 +121,14 @@ void SkyAreaDetector::detect(const std::string &image_file_path, const std::stri
     load_image(image_file_path);
 
     // 提取图像天空区域
+    LOG(INFO) << "Defining sky mask";
     cv::Mat sky_mask;
+
+    LOG(INFO) << "Extracting sky";
     extract_sky(_src_img, sky_mask);
 
     // 制作掩码输出
+    LOG(INFO) << "Creating mask file" << output_path;
     cv::Mat sky_image;
 
     int image_height = _src_img.size[0];
