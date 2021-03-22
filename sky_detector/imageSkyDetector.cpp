@@ -112,7 +112,7 @@ bool SkyAreaDetector::extract_sky(const cv::Mat &src_image, cv::Mat &sky_mask) {
  */
 void SkyAreaDetector::detect(const std::string &image_file_path, const std::string &output_path) {
 
-    LOG(INFO) << "开始检测图像: " << image_file_path;
+    LOG(INFO) << "Beginning with sky extraction of this file: " << image_file_path;
 
     // 加载图像
     load_image(image_file_path);
@@ -133,7 +133,7 @@ void SkyAreaDetector::detect(const std::string &image_file_path, const std::stri
 
     cv::imwrite(output_path, sky_image);
 
-    LOG(INFO) << "图像: " << image_file_path << "检测完毕";
+    LOG(INFO) << "Image: " << image_file_path << ", done extracting sky";
 }
 
 void SkyAreaDetector::batch_detect(const std::string &image_dir, const std::string &output_dir) {
